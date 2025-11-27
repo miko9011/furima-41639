@@ -11,6 +11,25 @@
   </head>
 
   <body>
+
+    <%# ---------------------- %>
+    <%# ログイン / ログアウトリンク %>
+    <%# ---------------------- %>
+
+    <% if user_signed_in? %>
+      <p>
+        ようこそ、<%= current_user.nickname %> さん |
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+      </p>
+    <% else %>
+      <p>
+        <%= link_to "ログイン", new_user_session_path %> |
+        <%= link_to "新規登録", new_user_registration_path %>
+      </p>
+    <% end %>
+
+    <hr>
+
     <%= yield %>
   </body>
 </html>

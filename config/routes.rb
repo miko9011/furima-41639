@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+=======
+  get 'items/index'
+  devise_for :users
+>>>>>>> Stashed changes
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # トップページを items#index に設定
+  root "items#index"
+
+  # items の index を使うために必要
+  resources :items, only: :index
+
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

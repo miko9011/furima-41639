@@ -14,7 +14,6 @@ class Item < ApplicationRecord
   validates :prefecture_id,      numericality: { other_than: 1, message: "can't be blank" }
   validates :delivery_time_id,   numericality: { other_than: 1, message: "can't be blank" }
 
-  # ★ ここで表示名を変える（超重要）
   def self.human_attribute_name(attr, options = {})
     {
       "description" => "Info",

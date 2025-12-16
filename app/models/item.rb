@@ -8,17 +8,9 @@ class Item < ApplicationRecord
   validates :price,        presence: true,
                            numericality: { message: "is not a number" }
 
-  validates :category_id,        numericality: { other_than: 1, message: "can't be blank" }
-  validates :sales_status_id,    numericality: { other_than: 1, message: "can't be blank" }
-  validates :shipping_fee_id,    numericality: { other_than: 1, message: "can't be blank" }
-  validates :prefecture_id,      numericality: { other_than: 1, message: "can't be blank" }
-  validates :delivery_time_id,   numericality: { other_than: 1, message: "can't be blank" }
-
-  def self.human_attribute_name(attr, options = {})
-    {
-      "description" => "Info",
-      "shipping_fee_id" => "Shipping fee status",
-      "delivery_time_id" => "Scheduled delivery"
-    }[attr.to_s] || super
-  end
+  validates :category_id,      numericality: { other_than: 1, message: "can't be blank" }
+  validates :sales_status_id,  numericality: { other_than: 1, message: "can't be blank" }
+  validates :shipping_fee_id,  numericality: { other_than: 1, message: "can't be blank" }
+  validates :prefecture_id,    numericality: { other_than: 1, message: "can't be blank" }
+  validates :delivery_time_id, numericality: { other_than: 1, message: "can't be blank" }
 end

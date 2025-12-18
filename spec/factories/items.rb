@@ -4,6 +4,7 @@ FactoryBot.define do
     description { "テスト用の商品説明です" }
 
     category_id { 2 }
+    sales_status_id { 2 }   
     shipping_fee_id { 2 }
     prefecture_id { 2 }
     delivery_time_id { 2 }

@@ -1,4 +1,4 @@
-rrequire 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do

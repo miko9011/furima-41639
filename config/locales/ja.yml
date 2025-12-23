@@ -2,26 +2,36 @@ ja:
   activerecord:
     attributes:
       item:
-        image: "Image"
-        name: "Name"
-        description: "Info"
-        category_id: "Category"
-        sales_status_id: "Sales status"
-        shipping_fee_id: "Shipping fee status"
-        prefecture_id: "Prefecture"
-        delivery_time_id: "Scheduled delivery"
-        price: "Price"
+        image: Image
+        name: Name
+        description: Description
+        price: Price
+        category_id: Category
+        sales_status_id: Sales status
+        shipping_fee_id: Shipping fee
+        prefecture_id: Prefecture
+        delivery_time_id: Delivery time
+
     errors:
       models:
         item:
           attributes:
+            image:
+              blank: can't be blank
+            name:
+              blank: can't be blank
+            description:
+              blank: can't be blank
+            price:
+              blank: can't be blank
+              not_a_number: is not a number
             category_id:
-              other_than: "can't be blank"
+              other_than: can't be blank
             sales_status_id:
-              other_than: "can't be blank"
+              other_than: can't be blank
             shipping_fee_id:
-              other_than: "can't be blank"
+              other_than: can't be blank
             prefecture_id:
-              other_than: "can't be blank"
+              other_than: can't be blank
             delivery_time_id:
-              other_than: "can't be blank"
+              other_than: can't be blank

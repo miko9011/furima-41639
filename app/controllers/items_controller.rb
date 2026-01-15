@@ -18,7 +18,12 @@ end
     end
   end
 
+    def show
+    @item = Item.find(params[:id])
+  end
+
   private
+  
 def item_params
   params.require(:item).permit(
     :name, :description, :category_id, :sales_status_id,

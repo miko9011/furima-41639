@@ -138,28 +138,55 @@
             <% if item.image.attached? %>
               <%= image_tag item.image, class: "item-img" %>
 
-              <%# 売却済みなら SOLD OUT 表示 %>
-            <% if item.purchase.present? %>
+              <% if item.purchase.present? %>
                 <div class='sold-out'>
                   <span>Sold Out!!</span>
                 </div>
               <% end %>
-
             <% end %>
           </div>
 
           <div class='item-info'>
             <h3 class='item-name'><%= item.name %></h3>
+
             <div class='item-price'>
               <span>
                 <%= item.price %>円<br>
                 <%= item.shipping_fee.name %>
               </span>
+
+              <div class='star-btn'>
+                <%= image_tag "star.png", class:"star-icon" %>
+                <span class='star-count'>0</span>
+              </div>
             </div>
           </div>
         <% end %>
       </li>
     <% end %>
+
+  <% else %>
+    <li class='list'>
+      <%= link_to '#' do %>
+        <%= image_tag "item-sample.png", class: "item-img" %>
+
+        <div class='item-info'>
+          <h3 class='item-name'>商品を出品してね！</h3>
+
+          <div class='item-price'>
+            <span>
+              99999999円<br>
+              (税込み)
+            </span>
+
+            <div class='star-btn'>
+              <%= image_tag "star.png", class:"star-icon" %>
+              <span class='star-count'>0</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </li>
   <% end %>
 </ul>
   </div>

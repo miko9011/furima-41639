@@ -29,7 +29,8 @@
               class: "item-destroy" %>
 
 <% elsif user_signed_in? %>
-  <%= link_to "購入画面に進む", item_purchases_path(@item), class: "item-red-btn" %>
+  <%# 購入機能はまだなので一旦コメントアウト %>
+  <%# <%= link_to "購入画面に進む", item_purchases_path(@item), class: "item-red-btn" %> 
 <% end %>
 
     <%# //ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>

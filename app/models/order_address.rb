@@ -35,15 +35,20 @@ class OrderAddress
       item_id: item_id
     )
 
-    # 🏠 住所保存
-    Address.create!(
-      postal_code: postal_code,
-      prefecture_id: prefecture_id,
-      city: city,
-      address: address,
-      building_name: building_name,
-      phone_number: phone_number,
-      order_id: order.id
-    )
+# 🏠 住所保存前に郵便番号を整形
+formatted_postal_code = postal_code
+if postal_code.present? && postal_code.match(/\A\d{7}\z/)
+  formatted_postal_code = postal_code.insert(3, '-')
+end
+
+Address.create!(
+  postal_code: formatted_postal_code,
+  prefecture_id: prefecture_id,
+  city: city,
+  address: address,
+  building_name: building_name,
+  phone_number: phone_number,
+  order_id: order.id
+)
   end
 end

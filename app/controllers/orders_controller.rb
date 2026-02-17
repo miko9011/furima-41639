@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
-  before_action :redirect_if_sold
+  before_action :redirect_if_unbuyable
 
   def index
     @order_address = OrderAddress.new
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 
     if @order_address.valid?
       @order_address.save
-      redirect_to root_path
+      redirect_to root_path, notice: "購入が完了しました"
     else
       render :index, status: :unprocessable_entity
     end
@@ -24,8 +24,12 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def redirect_if_sold
-    redirect_to root_path if @item.order.present?
+  # 🔒 購入不可条件をまとめてチェック
+  def redirect_if_unbuyable
+    # すでに購入済み、または自分の商品ならトップにリダイレクト
+    if @item.order.present? || @item.user_id == current_user.id
+      redirect_to root_path, alert: "この商品は購入できません"
+    end
   end
 
   def order_address_params

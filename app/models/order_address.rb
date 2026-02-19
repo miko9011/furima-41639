@@ -17,38 +17,19 @@ class OrderAddress
   end
 
   def save
-    item = Item.find(item_id)
-
-    # 🔐 秘密鍵は環境変数から取得
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-
-    # 💳 決済処理
-    Payjp::Charge.create(
-      amount: item.price,
-      card: token,
-      currency: 'jpy'
-    )
-
-    # 🧾 注文保存
     order = Order.create!(
       user_id: user_id,
       item_id: item_id
     )
 
-# 🏠 住所保存前に郵便番号を整形
-formatted_postal_code = postal_code
-if postal_code.present? && postal_code.match(/\A\d{7}\z/)
-  formatted_postal_code = postal_code.insert(3, '-')
-end
-
-Address.create!(
-  postal_code: formatted_postal_code,
-  prefecture_id: prefecture_id,
-  city: city,
-  address: address,
-  building_name: building_name,
-  phone_number: phone_number,
-  order_id: order.id
-)
+    Address.create!(
+      postal_code: postal_code,  # ← そのまま保存
+      prefecture_id: prefecture_id,
+      city: city,
+      address: address,
+      building_name: building_name,
+      phone_number: phone_number,
+      order_id: order.id
+    )
   end
 end

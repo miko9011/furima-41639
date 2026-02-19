@@ -2,7 +2,6 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_unbuyable
-  skip_before_action :verify_authenticity_token, only: :create
 
   def index
     @order_address = OrderAddress.new
@@ -12,6 +11,7 @@ class OrdersController < ApplicationController
     @order_address = OrderAddress.new(order_address_params)
 
     if @order_address.valid?
+      pay_item
       @order_address.save
       redirect_to root_path, notice: "購入が完了しました"
     else
@@ -25,9 +25,7 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  # 🔒 購入不可条件をまとめてチェック
   def redirect_if_unbuyable
-    # すでに購入済み、または自分の商品ならトップにリダイレクト
     if @item.order.present? || @item.user_id == current_user.id
       redirect_to root_path, alert: "この商品は購入できません"
     end
@@ -41,6 +39,16 @@ class OrdersController < ApplicationController
       user_id: current_user.id,
       item_id: params[:item_id],
       token: params[:token]
+    )
+  end
+
+  def pay_item
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_address_params[:token],
+      currency: 'jpy'
     )
   end
 end

@@ -16,6 +16,16 @@ class OrderAddress
     validates :token
   end
 
+  # 郵便番号：123-4567形式
+  validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/ }
+
+  # 都道府県：1（---）は不可
+  validates :prefecture_id,
+          numericality: { other_than: 1, message: "can't be blank" }
+
+  # 電話番号：10〜11桁の数字のみ
+  validates :phone_number, format: { with: /\A\d{10,11}\z/ }
+
   def save
     order = Order.create!(
       user_id: user_id,
@@ -23,7 +33,7 @@ class OrderAddress
     )
 
     Address.create!(
-      postal_code: postal_code,  # ← そのまま保存
+      postal_code: postal_code,
       prefecture_id: prefecture_id,
       city: city,
       address: address,

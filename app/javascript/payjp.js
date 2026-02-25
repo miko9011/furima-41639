@@ -1,10 +1,17 @@
-document.addEventListener("turbo:load", () => {
+document.addEventListener("turbo:load", setupPayjp);
+document.addEventListener("turbo:render", setupPayjp);
+
+function setupPayjp() {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
   if (document.querySelector("#number-form iframe")) return;
 
-  // 🔥 gonから公開鍵を取得
+  if (!gon || !gon.public_key) {
+    console.error("PAYJP public key is missing");
+    return;
+  }
+
   const payjp = Payjp(gon.public_key);
   const elements = payjp.elements();
 
@@ -32,11 +39,7 @@ document.addEventListener("turbo:load", () => {
       tokenInput.value = response.id;
       form.appendChild(tokenInput);
 
-      numberElement.clear();
-      expiryElement.clear();
-      cvcElement.clear();
-
       form.submit();
     });
   });
-});
+}

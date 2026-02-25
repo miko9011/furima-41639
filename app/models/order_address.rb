@@ -5,26 +5,27 @@ class OrderAddress
                 :building_name, :phone_number,
                 :user_id, :item_id, :token
 
-  with_options presence: true do
-    validates :postal_code
-    validates :prefecture_id
-    validates :city
-    validates :address
-    validates :phone_number
-    validates :user_id
-    validates :item_id
-    validates :token
-  end
+  # 郵便番号
+  validates :postal_code,
+            presence: true,
+            format: { with: /\A\d{3}-\d{4}\z/ }
 
-  # 郵便番号：123-4567形式
-  validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/ }
-
-  # 都道府県：1（---）は不可
+  # 都道府県
   validates :prefecture_id,
-          numericality: { other_than: 1, message: "can't be blank" }
+            presence: true,
+            numericality: { other_than: 1, message: "can't be blank" }
 
-  # 電話番号：10〜11桁の数字のみ
-  validates :phone_number, format: { with: /\A\d{10,11}\z/ }
+  # 電話番号
+  validates :phone_number,
+            presence: true,
+            format: { with: /\A\d{10,11}\z/ }
+
+  # その他必須項目
+  validates :city, presence: true
+  validates :address, presence: true
+  validates :user_id, presence: true
+  validates :item_id, presence: true
+  validates :token, presence: true
 
   def save
     order = Order.create!(

@@ -76,4 +76,5 @@ group :development, :test do
   gem 'active_hash'
   gem 'payjp'
 gem 'dotenv-rails', groups: [:development, :test]
+gem  'gon'
 end

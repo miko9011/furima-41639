@@ -2,23 +2,24 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_unbuyable
+  before_action :set_payjp_key, only: [:index, :create]
 
-  def index
-    @order_address = OrderAddress.new
+def index
+  gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+  @order_address = OrderAddress.new
+end
+
+ def create
+  @order_address = OrderAddress.new(order_params)
+  if @order_address.valid?
+    pay_item
+    @order_address.save
+    redirect_to root_path
+  else
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"] 
+    render :index, status: :unprocessable_entity
   end
-
-  def create
-    @order_address = OrderAddress.new(order_address_params)
-
-    if @order_address.valid?
-      pay_item
-      @order_address.save
-      redirect_to root_path, notice: "購入が完了しました"
-    else
-      render :index, status: :unprocessable_entity
-    end
-  end
-
+end
   private
 
   def set_item
@@ -29,6 +30,10 @@ class OrdersController < ApplicationController
     if @item.order.present? || @item.user_id == current_user.id
       redirect_to root_path, alert: "この商品は購入できません"
     end
+  end
+
+  def set_payjp_key
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
 
   def order_address_params
@@ -51,4 +56,4 @@ class OrdersController < ApplicationController
       currency: 'jpy'
     )
   end
-end
+ende

@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   before_action :set_payjp_key, only: [:index, :create]
 
 def index
-  gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
   @order_address = OrderAddress.new
 end
 
@@ -16,7 +15,6 @@ end
     @order_address.save
     redirect_to root_path
   else
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"] 
     render :index, status: :unprocessable_entity
   end
 end

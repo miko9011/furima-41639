@@ -25,6 +25,8 @@ function setupPayjp() {
   cvcElement.mount("#cvc-form");
 
   form.addEventListener("submit", (e) => {
+
+    
     e.preventDefault();
 
     payjp.createToken(numberElement).then((response) => {

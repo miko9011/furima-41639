@@ -74,4 +74,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'active_hash'
+  gem 'payjp'
+gem 'dotenv-rails', groups: [:development, :test]
+gem  'gon'
 end

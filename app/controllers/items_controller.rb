@@ -47,8 +47,10 @@ before_action :move_to_index, only: [:edit, :update, :destroy]
   end
 
   def move_to_index
-    redirect_to root_path unless current_user == @item.user
+   if current_user != @item.user || @item.order.present?
+    redirect_to root_path, alert: "この商品は編集できません"
   end
+end
 
   def item_params
     params.require(:item).permit(

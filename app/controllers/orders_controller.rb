@@ -54,4 +54,4 @@ end
       currency: 'jpy'
     )
   end
-ende
+end

@@ -13,17 +13,18 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
+
 gem "devise"
+gem "active_hash"
+gem "payjp"
+gem "gon"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
-  gem "active_hash"
-  gem "payjp"
   gem "dotenv-rails"
-  gem "gon"
 end
 
 group :development do

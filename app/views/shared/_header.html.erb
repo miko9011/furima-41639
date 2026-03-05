@@ -21,8 +21,7 @@
         <li>
     <%= link_to 'ログアウト',
     destroy_user_session_path,
-    method: :delete,
-    data: { confirm: "ログアウトしますか？" },
+    data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
     class: "logout" %>
         </li>
       <% else %>

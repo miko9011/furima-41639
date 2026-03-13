@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_unbuyable
-  before_action :set_payjp_key, only: [:index, :create]
+before_action :set_payjp_key, only: [:index]
 
 def index
   @order_address = OrderAddress.new

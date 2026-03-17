@@ -2,22 +2,22 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_unbuyable
-before_action :set_payjp_key, only: [:index]
+  before_action :set_payjp_key, only: [:index, :create]
 
-def index
-  @order_address = OrderAddress.new
-end
-
-def create
-  @order_address = OrderAddress.new(order_address_params)
-  if @order_address.valid?
-    pay_item
-    @order_address.save
-    redirect_to root_path
-  else
-    render :index, status: :unprocessable_entity
+  def index
+    @order_address = OrderAddress.new
   end
-end
+
+  def create
+    @order_address = OrderAddress.new(order_address_params)
+    if @order_address.valid?
+      pay_item
+      @order_address.save
+      redirect_to root_path
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
   private
 
   def set_item

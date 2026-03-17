@@ -5,12 +5,19 @@ function setupPayjp() {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  if (document.querySelector("#number-form iframe")) return;
-
   if (!gon || !gon.public_key) {
     console.error("PAYJP public key is missing");
     return;
   }
+
+  const numberForm = document.getElementById("number-form");
+  const expiryForm = document.getElementById("expiry-form");
+  const cvcForm = document.getElementById("cvc-form");
+
+
+  numberForm.innerHTML = "";
+  expiryForm.innerHTML = "";
+  cvcForm.innerHTML = "";
 
   const payjp = Payjp(gon.public_key);
   const elements = payjp.elements();
@@ -25,8 +32,6 @@ function setupPayjp() {
   cvcElement.mount("#cvc-form");
 
   form.addEventListener("submit", (e) => {
-
-    
     e.preventDefault();
 
     payjp.createToken(numberElement).then((response) => {
